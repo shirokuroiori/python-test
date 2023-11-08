@@ -1,0 +1,30 @@
+version: '3'
+services:
+  python-test:
+    build: .
+    container_name: python-test
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./src:/home/user
+    tty: true
+  pytest-db:
+    build: ./pytest_db
+    container_name: pytest_db
+    command: mysqld
+      --character-set-server=utf-8
+      --collation-server=utf8_unicode_ci
+      --skip-character-set-client-handshake
+    links:
+      - python-test
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ./pytest_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: user
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 23306:3306
+    volumes:
+      - ./pytest_db/initdb.d:/docker-entrypoint-initdb.db
