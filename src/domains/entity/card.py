@@ -1,5 +1,7 @@
 class Team:
-    def __init__(self, team_id:str, team_name:str, rank:str, target_member_dict:list, rec_expiry_date:str):
+    def __init__(
+            self, team_id: str, team_name: str, rank: str,
+            target_member_dict: list, rec_expiry_date: str):
         if len(target_member_dict) > 5:
             self.team_id = team_id
             self.team_name = team_name
